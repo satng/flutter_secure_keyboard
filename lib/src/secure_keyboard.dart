@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_keyboard/src/secure_keyboard_key.dart';
 import 'package:flutter_secure_keyboard/src/secure_keyboard_key_action.dart';
 import 'package:flutter_secure_keyboard/src/secure_keyboard_key_generator.dart';
 import 'package:flutter_secure_keyboard/src/secure_keyboard_key_type.dart';
 import 'package:flutter_secure_keyboard/src/secure_keyboard_type.dart';
-import 'package:flutter_secure_keyboard/src/secure_keyboard_key.dart';
 
 /// The height of the key input monitor.
 const double kKeyInputMonitorHeight = 50.0;
@@ -360,15 +360,17 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
       ),
     );
 
+    final width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async {
         widget.onCloseKeyPressed();
         return false;
       },
       child: Container(
-        width: MediaQuery.of(context).size.width,
+        width: width,
         height: height,
         color: widget.backgroundColor,
+        constraints: BoxConstraints(maxWidth: width * 0.6),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,

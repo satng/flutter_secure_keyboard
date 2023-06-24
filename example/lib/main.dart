@@ -15,8 +15,7 @@ class ExampleApp extends StatelessWidget {
 
 class WithSecureKeyboardExample extends StatefulWidget {
   @override
-  _WithSecureKeyboardExampleState createState() =>
-      _WithSecureKeyboardExampleState();
+  _WithSecureKeyboardExampleState createState() => _WithSecureKeyboardExampleState();
 }
 
 class _WithSecureKeyboardExampleState extends State<WithSecureKeyboardExample> {
@@ -34,6 +33,7 @@ class _WithSecureKeyboardExampleState extends State<WithSecureKeyboardExample> {
     // in the build function so that the secure keyboard works properly.
     return WithSecureKeyboard(
       controller: _secureKeyboardController,
+      keyInputMonitorPadding: EdgeInsets.zero,
       child: Scaffold(
         appBar: AppBar(
           title: Text('flutter_secure_keyboard'),
@@ -65,13 +65,15 @@ class _WithSecureKeyboardExampleState extends State<WithSecureKeyboardExample> {
           focusNode: _passwordTextFieldFocusNode,
           // We recommended to set false to prevent the software keyboard from opening.
           enableInteractiveSelection: false,
-          obscureText: true,
+          obscureText: false,
           onTap: () {
             _secureKeyboardController.show(
               type: SecureKeyboardType.ALPHA_NUMERIC,
               focusNode: _passwordTextFieldFocusNode,
               initText: _passwordEditor.text,
+              hideKeyInputMonitor:true,
               hintText: 'password',
+              shuffleNumericKey: false,
               // Use onCharCodesChanged to have text entered in real time.
               onCharCodesChanged: (List<int> charCodes) {
                 _passwordEditor.text = String.fromCharCodes(charCodes);
@@ -100,6 +102,7 @@ class _WithSecureKeyboardExampleState extends State<WithSecureKeyboardExample> {
               focusNode: _pinCodeTextFieldFocusNode,
               initText: _pinCodeEditor.text,
               hintText: 'pinCode',
+              shuffleNumericKey: false,
               // Use onDoneKeyPressed to allow text to be entered when you press the done key,
               // or to do something like encryption.
               onDoneKeyPressed: (List<int> charCodes) {
