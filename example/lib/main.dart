@@ -101,6 +101,7 @@ class _WithSecureKeyboardExampleState extends State<WithSecureKeyboardExample> {
               type: SecureKeyboardType.NUMERIC,
               focusNode: _pinCodeTextFieldFocusNode,
               initText: _pinCodeEditor.text,
+              hideKeyInputMonitor:true,
               hintText: 'pinCode',
               shuffleNumericKey: false,
               // Use onDoneKeyPressed to allow text to be entered when you press the done key,

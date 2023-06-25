@@ -362,7 +362,7 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
         width: width,
         height: height,
         color: widget.backgroundColor,
-        constraints: BoxConstraints(maxWidth: width * 0.6),
+        constraints: BoxConstraints(maxWidth: width * (widget.type == SecureKeyboardType.NUMERIC ? 0.4 : 0.6)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -543,14 +543,14 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
       case SecureKeyboardKeyAction.CLEAR:
         String? keyText = widget.clearKeyText;
         if (keyText == null || keyText.isEmpty) {
-          keyText = 'Clear';
+          keyText = '清空';
         }
         keyData = Text(keyText, style: widget.keyTextStyle);
         break;
       case SecureKeyboardKeyAction.DONE:
         String? keyText = widget.doneKeyText;
         if (keyText == null || keyText.isEmpty) {
-          keyText = 'Done';
+          keyText = '完成';
         }
         keyData = Text(keyText, style: widget.keyTextStyle);
         break;

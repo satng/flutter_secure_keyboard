@@ -40,8 +40,8 @@ class SecureKeyboardKeyGenerator {
       switch (rowNum) {
         case 3:
           rowKeys.add(_buildStringKey("0"));
-          rowKeys.add(_clearActionKey());
           rowKeys.add(_backspaceActionKey(20));
+          rowKeys.add(_clearActionKey());
           rowKeys.add(_doneActionKey());
           break;
         default:
