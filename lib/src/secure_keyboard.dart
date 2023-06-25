@@ -344,20 +344,13 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
       keyInputMonitor = SizedBox.shrink();
     } else {
       height = widget.height + kKeyInputMonitorHeight;
-      keyInputMonitor = Padding(
-        padding: widget.keyInputMonitorPadding,
-        child: _buildKeyInputMonitor(),
-      );
+      keyInputMonitor = Padding(padding: widget.keyInputMonitorPadding, child: _buildKeyInputMonitor());
     }
 
     final keyRows = _isSpecialCharsEnabled ? _specialKeyRows : _definedKeyRows;
     final keyboard = Padding(
       padding: widget.keyboardPadding,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _buildKeyboardKey(keyRows),
-      ),
+      child: Column(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.stretch, children: _buildKeyboardKey(keyRows)),
     );
 
     final width = MediaQuery.of(context).size.width;
@@ -515,6 +508,7 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
     final widgetKey = GlobalKey(debugLabel: 'StringKey');
 
     return Expanded(
+      flex: 2,
       child: SizedBox(
         key: widgetKey,
         height: widget.height / keyRowsLength,
@@ -585,7 +579,7 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
         );
         break;
       case SecureKeyboardKeyAction.BLANK:
-        return Expanded(child: SizedBox.shrink());
+        return Expanded(flex: 1, child: SizedBox.shrink());
     }
 
     Color keyColor;
@@ -623,6 +617,7 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
     }
 
     return Expanded(
+      flex: 2,
       child: SizedBox(
         height: widget.height / keyRowsLength,
         child: _KeyboardKeyLayout(
@@ -689,18 +684,13 @@ class _KeyboardKeyLayoutState extends State<_KeyboardKeyLayout> {
       },
       child: Container(
         margin: widget.margin,
-        decoration: BoxDecoration(
-          color: widget.color,
-          borderRadius: widget.borderRadius,
-        ),
+        decoration: BoxDecoration(color: widget.color, borderRadius: widget.borderRadius),
         child: Stack(
           children: [
             Positioned.fill(
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: _isKeyPressing
-                      ? Theme.of(context).splashColor
-                      : Colors.transparent,
+                  color: _isKeyPressing ? Theme.of(context).splashColor : Colors.transparent,
                   borderRadius: widget.borderRadius,
                 ),
               ),

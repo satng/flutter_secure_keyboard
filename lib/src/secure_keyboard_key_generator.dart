@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_secure_keyboard/src/secure_keyboard_key.dart';
 import 'package:flutter_secure_keyboard/src/secure_keyboard_key_action.dart';
 import 'package:flutter_secure_keyboard/src/secure_keyboard_key_type.dart';
@@ -37,8 +35,6 @@ class SecureKeyboardKeyGenerator {
 
   /// Returns a list of numeric key rows.
   List<List<SecureKeyboardKey>> getNumericKeyRows(bool shuffle) {
-    final random = Random();
-    int randomIndex;
 
     return List.generate(_numericKeyRows.length, (int rowNum) {
       List<SecureKeyboardKey> rowKeys = [];
@@ -83,6 +79,10 @@ class SecureKeyboardKeyGenerator {
           if (rowNum == 0 && shuffle) {
             rowKeys.shuffle();
           }
+          if (rowNum == 2) {
+            rowKeys.add(_blankActionKey());
+            rowKeys.insert(0, _blankActionKey());
+          }
       }
 
       return rowKeys;
@@ -126,6 +126,14 @@ class SecureKeyboardKeyGenerator {
   // Create a string type key.
   SecureKeyboardKey _buildStringKey(String key) {
     return SecureKeyboardKey(text: key, type: SecureKeyboardKeyType.STRING);
+  }
+
+  // Build a blank action key.
+  SecureKeyboardKey _blankActionKey() {
+    return SecureKeyboardKey(
+      type: SecureKeyboardKeyType.ACTION,
+      action: SecureKeyboardKeyAction.BLANK,
+    );
   }
 
   // Create a backspace action key.

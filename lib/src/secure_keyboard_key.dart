@@ -12,12 +12,10 @@ class SecureKeyboardKey {
   /// The action of [SecureKeyboardKey].
   final SecureKeyboardKeyAction? action;
 
+  final int flex;
+
   /// Constructs an instance of [SecureKeyboardKey].
-  const SecureKeyboardKey({
-    this.text,
-    required this.type,
-    this.action,
-  });
+  const SecureKeyboardKey({this.text, required this.type, this.action, this.flex = 1});
 
   /// Generate [SecureKeyboardKey] model from [json].
   factory SecureKeyboardKey.fromJson(Map<String, dynamic> json) {
@@ -25,6 +23,7 @@ class SecureKeyboardKey {
       text: json['text'],
       type: json['type'],
       action: json['action'],
+      flex: json['flex'],
     );
   }
 
@@ -34,6 +33,7 @@ class SecureKeyboardKey {
       'text': toUpperText ? text?.toUpperCase() : text,
       'type': type,
       'action': action,
+      'flex': flex,
     };
   }
 }
