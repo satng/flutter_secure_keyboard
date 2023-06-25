@@ -351,8 +351,12 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
       padding: widget.keyboardPadding,
       child: Column(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.stretch, children: _buildKeyboardKey(keyRows)),
     );
-
     final width = MediaQuery.of(context).size.width;
+    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+    var maxWidth = width;
+    if (devicePixelRatio == 1) {
+      maxWidth = width * (widget.type == SecureKeyboardType.NUMERIC ? 0.4 : 0.6);
+    }
     return WillPopScope(
       onWillPop: () async {
         widget.onCloseKeyPressed();
@@ -362,7 +366,7 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
         width: width,
         height: height,
         color: widget.backgroundColor,
-        constraints: BoxConstraints(maxWidth: width * (widget.type == SecureKeyboardType.NUMERIC ? 0.4 : 0.6)),
+        constraints: BoxConstraints(maxWidth: maxWidth),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,
