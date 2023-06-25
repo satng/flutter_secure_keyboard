@@ -15,7 +15,6 @@ class SecureKeyboardKeyGenerator {
     const [],
   ];
 
-
   final List<List<String>> _alphanumericKeyRows = [
     const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
     const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -23,7 +22,6 @@ class SecureKeyboardKeyGenerator {
     const ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
     const [],
   ];
-
 
   final List<List<String>> _specialCharsKeyRows = [
     const ['!', '@', '#', '\$', '%', '^', '&', '*', '(', ')'],
@@ -43,7 +41,7 @@ class SecureKeyboardKeyGenerator {
         case 3:
           rowKeys.add(_buildStringKey("0"));
           rowKeys.add(_clearActionKey());
-          rowKeys.add(_backspaceActionKey());
+          rowKeys.add(_backspaceActionKey(20));
           rowKeys.add(_doneActionKey());
           break;
         default:
@@ -65,9 +63,9 @@ class SecureKeyboardKeyGenerator {
 
       switch (rowNum) {
         case 3:
-          rowKeys.add(_shiftActionKey());
+          rowKeys.add(_shiftActionKey(30));
           rowKeys.addAll(_buildStringKeyRow(_alphanumericKeyRows, rowNum));
-          rowKeys.add(_backspaceActionKey());
+          rowKeys.add(_backspaceActionKey(30));
           break;
         case 4:
           rowKeys.add(_specialCharsActionKey());
@@ -80,8 +78,8 @@ class SecureKeyboardKeyGenerator {
             rowKeys.shuffle();
           }
           if (rowNum == 2) {
-            rowKeys.add(_blankActionKey());
-            rowKeys.insert(0, _blankActionKey());
+            rowKeys.add(_blankActionKey(10));
+            rowKeys.insert(0, _blankActionKey(10));
           }
       }
 
@@ -97,9 +95,9 @@ class SecureKeyboardKeyGenerator {
 
       switch (rowNum) {
         case 3:
-          rowKeys.add(_shiftActionKey());
+          rowKeys.add(_shiftActionKey(30));
           rowKeys.addAll(_buildStringKeyRow(_specialCharsKeyRows, rowNum));
-          rowKeys.add(_backspaceActionKey());
+          rowKeys.add(_backspaceActionKey(30));
           break;
         case 4:
           rowKeys.add(_specialCharsActionKey());
@@ -108,6 +106,10 @@ class SecureKeyboardKeyGenerator {
           break;
         default:
           rowKeys = _buildStringKeyRow(_specialCharsKeyRows, rowNum);
+          if (rowNum == 2) {
+            rowKeys.add(_blankActionKey(10));
+            rowKeys.insert(0, _blankActionKey(10));
+          }
       }
 
       return rowKeys;
@@ -129,50 +131,32 @@ class SecureKeyboardKeyGenerator {
   }
 
   // Build a blank action key.
-  SecureKeyboardKey _blankActionKey() {
-    return SecureKeyboardKey(
-      type: SecureKeyboardKeyType.ACTION,
-      action: SecureKeyboardKeyAction.BLANK,
-    );
+  SecureKeyboardKey _blankActionKey(int flex) {
+    return SecureKeyboardKey(type: SecureKeyboardKeyType.ACTION, action: SecureKeyboardKeyAction.BLANK, flex: flex);
   }
 
   // Create a backspace action key.
-  SecureKeyboardKey _backspaceActionKey() {
-    return SecureKeyboardKey(
-      type: SecureKeyboardKeyType.ACTION,
-      action: SecureKeyboardKeyAction.BACKSPACE,
-    );
+  SecureKeyboardKey _backspaceActionKey(int flex) {
+    return SecureKeyboardKey(type: SecureKeyboardKeyType.ACTION, action: SecureKeyboardKeyAction.BACKSPACE, flex: flex);
   }
 
   // Build a done action key.
   SecureKeyboardKey _doneActionKey() {
-    return SecureKeyboardKey(
-      type: SecureKeyboardKeyType.ACTION,
-      action: SecureKeyboardKeyAction.DONE,
-    );
+    return SecureKeyboardKey(type: SecureKeyboardKeyType.ACTION, action: SecureKeyboardKeyAction.DONE);
   }
 
   // Build a clear action key.
   SecureKeyboardKey _clearActionKey() {
-    return SecureKeyboardKey(
-      type: SecureKeyboardKeyType.ACTION,
-      action: SecureKeyboardKeyAction.CLEAR,
-    );
+    return SecureKeyboardKey(type: SecureKeyboardKeyType.ACTION, action: SecureKeyboardKeyAction.CLEAR);
   }
 
   // Build a shift action key.
-  SecureKeyboardKey _shiftActionKey() {
-    return SecureKeyboardKey(
-      type: SecureKeyboardKeyType.ACTION,
-      action: SecureKeyboardKeyAction.SHIFT,
-    );
+  SecureKeyboardKey _shiftActionKey(int flex) {
+    return SecureKeyboardKey(type: SecureKeyboardKeyType.ACTION, action: SecureKeyboardKeyAction.SHIFT, flex: flex);
   }
 
   // Build a special characters action key.
   SecureKeyboardKey _specialCharsActionKey() {
-    return SecureKeyboardKey(
-      type: SecureKeyboardKeyType.ACTION,
-      action: SecureKeyboardKeyAction.SPECIAL_CHARACTERS,
-    );
+    return SecureKeyboardKey(type: SecureKeyboardKeyType.ACTION, action: SecureKeyboardKeyAction.SPECIAL_CHARACTERS);
   }
 }

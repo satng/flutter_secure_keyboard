@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -406,13 +405,12 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
       secureTextStyle = widget.inputTextStyle;
     } else {
       secureText = widget.hintText ?? '';
-      secureTextStyle = widget.inputTextStyle
-          .copyWith(color: widget.inputTextStyle.color?.withOpacity(0.5));
+      secureTextStyle = widget.inputTextStyle.copyWith(color: widget.inputTextStyle.color?.withOpacity(0.5));
     }
 
     String? lengthSymbol = widget.inputTextLengthSymbol;
     if (lengthSymbol == null) {
-      lengthSymbol = (Platform.localeName == 'ko_KR') ? '자' : 'digit';
+      lengthSymbol = 'digit';
     }
     final lengthText = '${charCodes.length}$lengthSymbol';
 
@@ -421,17 +419,9 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
       child: Row(
         children: [
           Expanded(
-            child: Text(
-              secureText,
-              style: secureTextStyle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+            child: Text(secureText, style: secureTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
-            child: Text(lengthText, style: widget.keyTextStyle),
-          ),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 5.0), child: Text(lengthText, style: widget.keyTextStyle)),
           if (widget.obscureText) _buildViewsButton(),
           _buildCloseButton()
         ],
@@ -508,7 +498,7 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
     final widgetKey = GlobalKey(debugLabel: 'StringKey');
 
     return Expanded(
-      flex: 2,
+      flex: key.flex,
       child: SizedBox(
         key: widgetKey,
         height: widget.height / keyRowsLength,
@@ -547,22 +537,20 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
       case SecureKeyboardKeyAction.SHIFT:
         keyData = Icon(
           Icons.arrow_upward,
-          color: (_isWeakShiftEnabled && !_isStrongShiftEnabled)
-              ? widget.activatedKeyColor ?? widget.doneKeyColor
-              : widget.keyTextStyle.color,
+          color: (_isWeakShiftEnabled && !_isStrongShiftEnabled) ? widget.activatedKeyColor ?? widget.doneKeyColor : widget.keyTextStyle.color,
         );
         break;
       case SecureKeyboardKeyAction.CLEAR:
         String? keyText = widget.clearKeyText;
         if (keyText == null || keyText.isEmpty) {
-          keyText = (Platform.localeName == 'ko_KR') ? '초기화' : 'Clear';
+          keyText = 'Clear';
         }
         keyData = Text(keyText, style: widget.keyTextStyle);
         break;
       case SecureKeyboardKeyAction.DONE:
         String? keyText = widget.doneKeyText;
         if (keyText == null || keyText.isEmpty) {
-          keyText = (Platform.localeName == 'ko_KR') ? '입력완료' : 'Done';
+          keyText = 'Done';
         }
         keyData = Text(keyText, style: widget.keyTextStyle);
         break;
@@ -579,7 +567,7 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
         );
         break;
       case SecureKeyboardKeyAction.BLANK:
-        return Expanded(flex: 1, child: SizedBox.shrink());
+        return Expanded(flex: key.flex, child: SizedBox.shrink());
     }
 
     Color keyColor;
@@ -617,7 +605,7 @@ class _SecureKeyboardState extends State<SecureKeyboard> {
     }
 
     return Expanded(
-      flex: 2,
+      flex: key.flex,
       child: SizedBox(
         height: widget.height / keyRowsLength,
         child: _KeyboardKeyLayout(

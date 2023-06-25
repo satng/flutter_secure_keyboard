@@ -12,28 +12,19 @@ class SecureKeyboardKey {
   /// The action of [SecureKeyboardKey].
   final SecureKeyboardKeyAction? action;
 
+  //the key text weight
   final int flex;
 
   /// Constructs an instance of [SecureKeyboardKey].
-  const SecureKeyboardKey({this.text, required this.type, this.action, this.flex = 1});
+  const SecureKeyboardKey({this.text, required this.type, this.action, this.flex = 20});
 
   /// Generate [SecureKeyboardKey] model from [json].
   factory SecureKeyboardKey.fromJson(Map<String, dynamic> json) {
-    return SecureKeyboardKey(
-      text: json['text'],
-      type: json['type'],
-      action: json['action'],
-      flex: json['flex'],
-    );
+    return SecureKeyboardKey(text: json['text'], type: json['type'], action: json['action'], flex: json['flex']);
   }
 
   /// Returns the data field of [SecureKeyboardKey] in JSON format.
   Map<String, dynamic> toJson({bool toUpperText = false}) {
-    return {
-      'text': toUpperText ? text?.toUpperCase() : text,
-      'type': type,
-      'action': action,
-      'flex': flex,
-    };
+    return {'text': toUpperText ? text?.toUpperCase() : text, 'type': type, 'action': action, 'flex': flex};
   }
 }
